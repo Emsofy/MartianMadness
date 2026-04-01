@@ -6,7 +6,7 @@ using TMPro;
 
 public class DevConsole : MonoBehaviour
 {
-    //test change
+   
     public GameObject panel;
     public TMP_InputField inputField;
     public TextMeshProUGUI logText;
