@@ -3,7 +3,7 @@ using UnityEngine.InputSystem; // Required for the new system
 
 public class Movement : MonoBehaviour
 {
-    public float moveSpeed = 0.5f;
+    private float moveSpeed = 8f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     public Animator animator;  
@@ -22,14 +22,20 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        // Apply velocity based on input and speed
+        //Apply velocity based on input and speed
+
         //rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
-        //    rb.linearVelocity = moveInput * moveSpeed;
+        //rb.linearVelocity = moveInput * moveSpeed;
+
 
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        transform.Translate(moveInput);
+        // Movement multiplied by Time.deltaTime
+        Vector2 movement = new Vector2(inputX, inputY);
+        transform.Translate(movement * moveSpeed * Time.deltaTime);
+
+        //transform.Translate(moveInput);
 
         if(inputX != 0)
         {
@@ -60,6 +66,7 @@ public class Movement : MonoBehaviour
         }
 
     }
+
     /*public void Move(InputAction.CallbackContext context)
     {
         animator.SetBool("isWalking", true);
