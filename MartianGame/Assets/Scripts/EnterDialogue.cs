@@ -18,7 +18,7 @@ public class EnterDialogue : MonoBehaviour
 
     private void OnTrigger2D(Collider2D other)
     {
-        if (other.CompareTag("Alien"))
+        if (other.CompareTag("Player"))
         {
             Debug.Log("triggered");
 
