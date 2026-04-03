@@ -430,6 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd61995b7801dc345a5f9d2da428e786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnterDialogue
+  inRange: 0
 --- !u!1 &1190053227
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,7 +470,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2138356783}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 4.63
+    OrthographicSize: 7.66
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -609,7 +610,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.63
+  orthographic size: 7.66
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -984,7 +985,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!114 &2138356781
@@ -999,7 +1000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d36b9789d1caa348af4641a1852bb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
-  moveSpeed: 0.000001
   animator: {fileID: 2138356785}
 --- !u!212 &2138356782
 SpriteRenderer:

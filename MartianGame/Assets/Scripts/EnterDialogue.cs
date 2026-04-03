@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnterDialogue : MonoBehaviour
 {
- 
+    public bool inRange;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -13,19 +13,20 @@ public class EnterDialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void OnTrigger2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if (inRange && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("triggered");
-
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("Dialogue start");
-            }
+            Debug.Log("E");
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+
+        if (collision.CompareTag("Player"))
+        {
+            inRange = true;
+        }
+    }
+
 }
