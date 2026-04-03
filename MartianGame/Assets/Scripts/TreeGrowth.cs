@@ -5,40 +5,83 @@ public class TreeGrowth : MonoBehaviour
     public int woodCount = 0;
     public int seedCount = 0;
 
-// planting trees
-//growth cycle
-//probability on reg vs special 
-//if special no more special
-//chopping tree(e)
-//wood count 
+    public float treeDistance = 2f; //distance player is away from tree for raycast to work
+    private movementTest moveScript;
+    public GameObject babytreePrefab;
+    public float offest = 1.0f; //offset for raycast 
+    //public LayerMask treeLayer; 
+
+
+    // planting trees
+    //growth cycle
+    //probability on reg vs special 
+    //if special no more special
+    //chopping tree(e)
+    //wood count 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        moveScript = GetComponent<movementTest>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ChopTree();
+        PlaceTree();
     }
 
     public void PlaceTree()
     {
         if (Input.GetKeyDown(KeyCode.E) && seedCount >=1) //add && to check if placeable tile (collision compare tag planter plot)
         {
-            //place seed to grow tree
+            Vector2 spawnpos = (Vector2)transform.position + (moveScript.lastDirection * offest);
+            Instantiate(babytreePrefab, spawnpos, transform.rotation);
+            seedCount--;
+            Debug.Log("planting seed");
+        }
+        else if(Input.GetKeyDown(KeyCode.E) && seedCount<=0)
+        {
+            Debug.Log("couldn't plant seed");
         }
     }
 
-    public void ChopTree(int woodCount)
+    public void ChopTree()
     {
-        //press key compare if tree
-        //destroy tree object
-        //give player (5-10(wood))
-        //give player seed (0-2)
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Vector2 origin = (Vector2)transform.position + (moveScript.lastDirection * offest);
+            Debug.Log("running tree chop");
+            RaycastHit2D hit = Physics2D.Raycast(origin, moveScript.lastDirection, treeDistance); //shoots raycast from player's last move direction
+            if (hit.collider != null)
+            {
+                if (hit.collider.CompareTag("Tree"))
+                {
+                    Debug.Log("Chopping tree");
+                    Destroy(hit.collider.gameObject);
+                    int woodRand = Random.Range(5, 11); //gives random amt of wood from 5-10
+                    Debug.Log("wood given:" + woodRand);
+                    woodCount += woodRand;
+                    int seedRand = Random.Range(1, 4); //gives random amt of seeds from 1-3
+                    Debug.Log("seed given:" + seedRand);
+                    seedCount += seedRand;
+                }
+                else
+                {
+                    Debug.Log("hit: "+ hit.collider);
+                }
+
+            }
+            else
+            {
+                Debug.Log("didn't hit a tree");
+            }
+                Debug.DrawRay(transform.position, moveScript.lastDirection * treeDistance, Color.red, 0.5f);
+        }
     }
+
+  
 
     //function for tree growth 
     //4 hours for tree to grow
