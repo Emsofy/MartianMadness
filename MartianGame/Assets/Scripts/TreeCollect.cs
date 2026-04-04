@@ -74,7 +74,7 @@ public class TreeCollect : MonoBehaviour
                 }
                 if(hit.collider.CompareTag("AppleTree"))
                 {
-                    Debug.Log("Chopping tree");
+                    Debug.Log("Chopping apple tree");
 
                     TreeGrow tree = hit.collider.GetComponent<TreeGrow>();
 
@@ -94,11 +94,12 @@ public class TreeCollect : MonoBehaviour
                     seedCount += seedRand;
 
                     appleCount += 2;
+                    Debug.Log("apple given: 2 | apple count: " +appleCount);
                 }
 
                 if (hit.collider.CompareTag("GoldenTree"))
                 {
-                    Debug.Log("Chopping tree");
+                    Debug.Log("Chopping Golden tree");
 
                     TreeGrow tree = hit.collider.GetComponent<TreeGrow>();
 
@@ -118,7 +119,9 @@ public class TreeCollect : MonoBehaviour
                     seedCount += seedRand;
 
                     appleCount += 1;
+                    Debug.Log("apple given: 2 | apple count: " + appleCount);
                     hasGoldApple = true;
+                    Debug.Log("Got gold apple");
                 }
                 //else
                 //{

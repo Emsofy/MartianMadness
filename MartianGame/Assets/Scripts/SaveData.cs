@@ -8,6 +8,7 @@ public class TreeSaveData
     public string id;
     public Vector3 position;
     public long endTimeTicks;
+    public string Appletag;
 }
 [Serializable]
 public class SaveData
