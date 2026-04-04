@@ -130,6 +130,20 @@ public class DevConsole : MonoBehaviour
                     }
                 }
             
+            },
+            {"delete_trees", _ =>
+                {
+                    var treelist = GameManager.Instance.activeTrees;
+                    foreach (var tree in treelist)
+                    {
+                        if( tree != null)
+                        { 
+                            Log("Deleted tree " + tree.id);
+                            UnityEngine.Object.Destroy(tree.gameObject);
+                         }
+                    }
+                    treelist.Clear();
+                }
             }
 
         };

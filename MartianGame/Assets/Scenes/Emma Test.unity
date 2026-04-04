@@ -2314,6 +2314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TreeGrowth
   woodCount: 0
   seedCount: 0
+  appleCount: 0
+  hasGoldApple: 0
   treeDistance: 2
   offest: 1
 --- !u!114 &1993857292

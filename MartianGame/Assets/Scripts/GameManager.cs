@@ -1,6 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -166,19 +167,17 @@ public class GameManager : MonoBehaviour
         ApplyToScene();
     }
 
-    public void PlantTree(Vector3 position)
-    {
-        GameObject obj = Instantiate(treePrefab, position, Quaternion.identity);
-
-        TreeGrow treegrowS = obj.GetComponent<TreeGrow>();
-        treegrowS.StartNew(position);
-
-        activeTrees.Add(treegrowS);
-
-        SaveSystem.SaveGame();
-    }
     public void LoadTrees(SaveData data)
     {
+        GameObject[] mapTrees = GameObject.FindGameObjectsWithTag("Tree");
+        foreach (GameObject tree in mapTrees)
+        {
+           
+            //activeTrees.Add(tree);
+      
+        }
+        Debug.Log("Found " + activeTrees.Count + " trees");
+
         if (data.trees == null) return;
         activeTrees.Clear();
 
@@ -190,5 +189,16 @@ public class GameManager : MonoBehaviour
             tree.Init(treeData);
             activeTrees.Add(tree);
         }
+    }
+    public void PlantTree(Vector3 position)
+    {
+        GameObject obj = Instantiate(treePrefab, position, Quaternion.identity);
+
+        TreeGrow treegrowS = obj.GetComponent<TreeGrow>();
+        treegrowS.StartNew(position);
+
+        activeTrees.Add(treegrowS);
+
+        SaveSystem.SaveGame();
     }
 }

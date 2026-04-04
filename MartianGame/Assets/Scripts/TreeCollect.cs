@@ -4,6 +4,8 @@ public class TreeCollect : MonoBehaviour
 {
     public int woodCount = 0;
     public int seedCount = 0;
+    public int appleCount = 0;
+    public bool hasGoldApple = false;
 
     public float treeDistance = 2f; //distance player is away from tree for raycast to work
     private movementTest moveScript;
@@ -49,6 +51,29 @@ public class TreeCollect : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Tree"))
                 {
+                    Debug.Log("Chopping main tree");
+
+                    TreeGrow mapTree = hit.collider.GetComponent<TreeGrow>();
+
+                    if (mapTree != null)
+                    {
+                        GameManager.Instance.activeTrees.Remove(mapTree);
+                        Destroy(mapTree.gameObject);
+                        SaveSystem.SaveGame();
+                    }
+
+                    int woodRand = Random.Range(5, 11);
+                    Debug.Log("wood given:" + woodRand);
+                    woodCount += woodRand;
+
+                    int seedRand = Random.Range(1, 4);
+                    Debug.Log("seed given:" + seedRand);
+                    seedCount += seedRand;
+
+                    //appleCount += 2;
+                }
+                if(hit.collider.CompareTag("AppleTree"))
+                {
                     Debug.Log("Chopping tree");
 
                     TreeGrow tree = hit.collider.GetComponent<TreeGrow>();
@@ -67,11 +92,38 @@ public class TreeCollect : MonoBehaviour
                     int seedRand = Random.Range(1, 4);
                     Debug.Log("seed given:" + seedRand);
                     seedCount += seedRand;
+
+                    appleCount += 2;
                 }
-                else
+
+                if (hit.collider.CompareTag("GoldenTree"))
                 {
-                    Debug.Log("hit: "+ hit.collider);
+                    Debug.Log("Chopping tree");
+
+                    TreeGrow tree = hit.collider.GetComponent<TreeGrow>();
+
+                    if (tree != null)
+                    {
+                        GameManager.Instance.activeTrees.Remove(tree);
+                        Destroy(tree.gameObject);
+                        SaveSystem.SaveGame();
+                    }
+
+                    int woodRand = Random.Range(5, 11);
+                    Debug.Log("wood given:" + woodRand);
+                    woodCount += woodRand;
+
+                    int seedRand = Random.Range(1, 4);
+                    Debug.Log("seed given:" + seedRand);
+                    seedCount += seedRand;
+
+                    appleCount += 1;
+                    hasGoldApple = true;
                 }
+                //else
+                //{
+                //    Debug.Log("hit: "+ hit.collider);
+                //}
 
             }
             else

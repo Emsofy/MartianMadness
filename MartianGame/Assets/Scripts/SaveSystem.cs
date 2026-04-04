@@ -27,6 +27,10 @@ public static class SaveSystem
         foreach (var tree in gm.activeTrees)
         {
             data.trees.Add(tree.GetSaveData());
+            if (tree == null)
+            {
+                return;
+            }
         }
 
 
