@@ -21,8 +21,14 @@ public static class SaveSystem
             playerPosition = gm.playerPosition,
             lastLoginTime = DateTime.UtcNow.Ticks,
             lastOfflineSeconds = gm.lastComputedOfflineSeconds,
-            completedDialogues = new List<string>(gm.completedDialogues)
+            completedDialogues = new List<string>(gm.completedDialogues),
+            trees = new List<TreeSaveData>()
         };
+        foreach (var tree in gm.activeTrees)
+        {
+            data.trees.Add(tree.GetSaveData());
+        }
+
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, json);

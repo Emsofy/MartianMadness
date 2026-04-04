@@ -1,23 +1,14 @@
 using UnityEngine;
 
-public class TreeGrowth : MonoBehaviour
+public class TreeCollect : MonoBehaviour
 {
     public int woodCount = 0;
     public int seedCount = 0;
 
     public float treeDistance = 2f; //distance player is away from tree for raycast to work
     private movementTest moveScript;
-    public GameObject babytreePrefab;
+    //public GameObject babytreePrefab;
     public float offest = 1.0f; //offset for raycast 
-    //public LayerMask treeLayer; 
-
-
-    // planting trees
-    //growth cycle
-    //probability on reg vs special 
-    //if special no more special
-    //chopping tree(e)
-    //wood count 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,7 +28,7 @@ public class TreeGrowth : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && seedCount >=1) //add && to check if placeable tile (collision compare tag planter plot)
         {
             Vector2 spawnpos = (Vector2)transform.position + (moveScript.lastDirection * offest);
-            Instantiate(babytreePrefab, spawnpos, transform.rotation);
+            GameManager.Instance.PlantTree(spawnpos);
             seedCount--;
             Debug.Log("planting seed");
         }
@@ -59,11 +50,21 @@ public class TreeGrowth : MonoBehaviour
                 if (hit.collider.CompareTag("Tree"))
                 {
                     Debug.Log("Chopping tree");
-                    Destroy(hit.collider.gameObject);
-                    int woodRand = Random.Range(5, 11); //gives random amt of wood from 5-10
+
+                    TreeGrow tree = hit.collider.GetComponent<TreeGrow>();
+
+                    if (tree != null)
+                    {
+                        GameManager.Instance.activeTrees.Remove(tree);
+                        Destroy(tree.gameObject);
+                        SaveSystem.SaveGame();
+                    }
+
+                    int woodRand = Random.Range(5, 11);
                     Debug.Log("wood given:" + woodRand);
                     woodCount += woodRand;
-                    int seedRand = Random.Range(1, 4); //gives random amt of seeds from 1-3
+
+                    int seedRand = Random.Range(1, 4);
                     Debug.Log("seed given:" + seedRand);
                     seedCount += seedRand;
                 }

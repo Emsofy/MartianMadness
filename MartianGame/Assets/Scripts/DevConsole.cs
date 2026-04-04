@@ -105,7 +105,33 @@ public class DevConsole : MonoBehaviour
                     else
                         Log("Usage: time <seconds>");
                 }
+            },
+            { "tree_time_all", args =>
+                {
+                    if(args.Length > 0 && int.TryParse(args[0], out int seconds))
+                    {
+                        foreach (var tree in GameManager.Instance.activeTrees)
+                        {
+                            tree.SetRemainingSeconds(seconds);
+                        }
+                        Log("Set all tree timers to " + seconds + " seconds");
+                    }
+                    else
+                        Log("Usage: time_time_all <seconds");
+                }
+
+            },
+
+            {"tree_list", _ =>
+                {
+                    foreach (var tree in GameManager.Instance.activeTrees)
+                    {
+                        Log("Tree " + tree.id + " | " + tree.GetRemainingSeconds() + "s");
+                    }
+                }
+            
             }
+
         };
     }
 
