@@ -1,32 +1,87 @@
+using TMPro;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
 
 public class EnterDialogue : MonoBehaviour
 {
-    public bool inRange;
+    public GameObject dialoguePanel;
+    public TextMeshProUGUI dialogueText;
+    public string[] dialogue;
+    private int index;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public float wordSpeed;
+    public bool playerIsClose;
 
-    // Update is called once per frame
-    void Update()
+    public GameObject Button;
+
+    private void Update()
     {
-        if (inRange && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && playerIsClose)
         {
-            Debug.Log("E");
+            if (dialoguePanel.activeInHierarchy)
+            {
+                zeroText();
+            }
+            else
+            {
+                dialoguePanel.SetActive(true);
+                StartCoroutine(Typing());
+            }
+        }
+
+        if(dialogueText.text == dialogue[index])
+        {
+            Button.SetActive(true);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void zeroText()
     {
-        
+        dialogueText.text = "";
+        index = 0;
+        dialoguePanel.SetActive(false);
+    }
 
-        if (collision.CompareTag("Player"))
+    IEnumerator Typing()
+    {
+        foreach(char letter in dialogue[index].ToCharArray())
         {
-            inRange = true;
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(wordSpeed);
         }
     }
 
+    public void NextLine()
+    {
+
+        Button.SetActive(false);
+
+        if(index < dialogue.Length - 1)
+        {
+            index++;
+            dialogueText.text = "";
+            StartCoroutine(Typing());
+        }
+        else
+        {
+            zeroText();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerIsClose = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerIsClose = false;
+            zeroText();
+        }
+    }
 }
+
