@@ -1,6 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -11,7 +12,10 @@ public class GameManager : MonoBehaviour
     public int playerLevel = 1;
     public Vector3 playerPosition;
 
-   
+    [Header("Trees")]
+    public GameObject treePrefab;
+    public List<TreeGrow> activeTrees = new List<TreeGrow>();
+
     [Header("Dialogue")]
     public HashSet<string> completedDialogues = new HashSet<string>();
 
@@ -64,7 +68,7 @@ public class GameManager : MonoBehaviour
 
         // Apply data to scene objects (player, dialogue flags)
         ApplyToScene();
-
+        LoadTrees(data);
         unsavedChanges = false; // loaded state is clean
     }
 
@@ -161,5 +165,40 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ApplyToScene();
+    }
+
+    public void LoadTrees(SaveData data)
+    {
+        GameObject[] mapTrees = GameObject.FindGameObjectsWithTag("Tree");
+        foreach (GameObject tree in mapTrees)
+        {
+           
+            //activeTrees.Add(tree);
+      
+        }
+        Debug.Log("Found " + activeTrees.Count + " trees");
+
+        if (data.trees == null) return;
+        activeTrees.Clear();
+
+        foreach (var treeData in data.trees)
+        {
+            GameObject obj = Instantiate(treePrefab, treeData.position, Quaternion.identity);
+
+            TreeGrow tree = obj.GetComponent<TreeGrow>();
+            tree.Init(treeData);
+            activeTrees.Add(tree);
+        }
+    }
+    public void PlantTree(Vector3 position)
+    {
+        GameObject obj = Instantiate(treePrefab, position, Quaternion.identity);
+
+        TreeGrow treegrowS = obj.GetComponent<TreeGrow>();
+        treegrowS.StartNew(position);
+
+        activeTrees.Add(treegrowS);
+
+        SaveSystem.SaveGame();
     }
 }

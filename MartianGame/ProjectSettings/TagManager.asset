@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Alien
+  - Tree
+  - AppleTree
+  - GoldenTree
   layers:
   - Default
   - TransparentFX
