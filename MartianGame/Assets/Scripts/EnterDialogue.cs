@@ -14,6 +14,7 @@ public class EnterDialogue : MonoBehaviour
     public bool playerIsClose;
 
     public GameObject Button;
+    public GameObject Bubble;
 
     private void Update()
     {
@@ -73,6 +74,7 @@ public class EnterDialogue : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerIsClose = true;
+            Bubble.SetActive(true);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -81,6 +83,7 @@ public class EnterDialogue : MonoBehaviour
         {
             playerIsClose = false;
             zeroText();
+            Bubble.SetActive(false);
         }
     }
 }
