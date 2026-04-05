@@ -1,9 +1,12 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-
+ 
     [Header("Dialogue Database")]
     public DialogueDatabaseSO database;
 
