@@ -3,7 +3,7 @@ using UnityEngine.InputSystem; // Required for the new system
 
 public class Movement : MonoBehaviour
 {
-    private float moveSpeed = 8f;
+    private float moveSpeed = 3f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     public Animator animator;  
