@@ -188,6 +188,7 @@ public class GameManager : MonoBehaviour
             TreeGrow tree = obj.GetComponent<TreeGrow>();
             tree.Init(treeData);
             activeTrees.Add(tree);
+            //Appletag = gameObject.tag;
         }
     }
     public void PlantTree(Vector3 position)

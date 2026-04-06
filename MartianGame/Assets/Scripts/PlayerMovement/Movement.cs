@@ -6,7 +6,9 @@ public class Movement : MonoBehaviour
     private float moveSpeed = 3f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    public Animator animator;  
+    public Animator animator;
+
+    public Vector2 lastDirection = Vector2.right;
 
     void Start()
     {
@@ -34,10 +36,14 @@ public class Movement : MonoBehaviour
         // Movement multiplied by Time.deltaTime
         Vector2 movement = new Vector2(inputX, inputY);
         transform.Translate(movement * moveSpeed * Time.deltaTime);
+        if (inputX != 0 || inputY != 0)
+        {
+            lastDirection = new Vector2(inputX, inputY).normalized;
+        }
 
         //transform.Translate(moveInput);
 
-        if(inputX != 0)
+        if (inputX != 0)
         {
             animator.SetBool("isWalking", true);
             animator.SetFloat("InputX", moveInput.x);

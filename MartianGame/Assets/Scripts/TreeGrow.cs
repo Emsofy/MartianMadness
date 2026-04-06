@@ -48,7 +48,7 @@ public class TreeGrow : MonoBehaviour
         {
             int appleProb = UnityEngine.Random.Range(1, 11);
             Debug.Log(appleProb);
-            if (appleProb < 6)
+            if (appleProb > 2)
             {
                 gameObject.tag = "AppleTree";
                 gameObject.transform.localScale = Vector3.one * 0.75f;
@@ -57,7 +57,7 @@ public class TreeGrow : MonoBehaviour
                 return;
 
             }
-            if (appleProb >= 6)
+            if (appleProb <= 2)
             {
             gameObject.tag = "GoldenTree";
             gameObject.transform.localScale = Vector3.one * 0.75f;

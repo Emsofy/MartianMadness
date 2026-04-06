@@ -8,14 +8,15 @@ public class TreeCollect : MonoBehaviour
     public bool hasGoldApple = false;
 
     public float treeDistance = 2f; //distance player is away from tree for raycast to work
-    private movementTest moveScript;
+    //private movementTest moveScript;
+    private Movement moveScript;
     //public GameObject babytreePrefab;
     public float offest = 1.0f; //offset for raycast 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        moveScript = GetComponent<movementTest>();
+        moveScript = GetComponent<Movement>();
     }
 
     // Update is called once per frame
@@ -27,14 +28,14 @@ public class TreeCollect : MonoBehaviour
 
     public void PlaceTree()
     {
-        if (Input.GetKeyDown(KeyCode.E) && seedCount >=1) //add && to check if placeable tile (collision compare tag planter plot)
+        if (Input.GetMouseButtonDown(1) && seedCount >=1) //add && to check if placeable tile (collision compare tag planter plot)
         {
             Vector2 spawnpos = (Vector2)transform.position + (moveScript.lastDirection * offest);
             GameManager.Instance.PlantTree(spawnpos);
             seedCount--;
             Debug.Log("planting seed");
         }
-        else if(Input.GetKeyDown(KeyCode.E) && seedCount<=0)
+        else if(Input.GetMouseButtonDown(1) && seedCount<=0)
         {
             Debug.Log("couldn't plant seed");
         }
@@ -42,7 +43,7 @@ public class TreeCollect : MonoBehaviour
 
     public void ChopTree()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 origin = (Vector2)transform.position + (moveScript.lastDirection * offest);
             Debug.Log("running tree chop");
