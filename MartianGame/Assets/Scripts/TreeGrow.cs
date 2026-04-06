@@ -16,7 +16,8 @@ public class TreeGrow : MonoBehaviour
         id = data.id;
         transform.position = data.position;
         endTime = new DateTime(data.endTimeTicks);
-        Appletag = gameObject.tag; 
+        Appletag = data.Appletag; 
+        applegiven = data.applegiven;
     }
     // when the tree gets planted 
     public void StartNew(Vector3 position)
@@ -54,21 +55,23 @@ public class TreeGrow : MonoBehaviour
                 gameObject.transform.localScale = Vector3.one * 0.75f;
                 GetComponent<SpriteRenderer>().color = Color.red;
                 col.enabled = true;
+                //SaveSystem.SaveGame();
                 return;
 
             }
             if (appleProb <= 2)
             {
-            gameObject.tag = "GoldenTree";
-            gameObject.transform.localScale = Vector3.one * 0.75f;
-            GetComponent<SpriteRenderer>().color = Color.yellow;
-            col.enabled = true;
-            return;
+                gameObject.tag = "GoldenTree";
+                gameObject.transform.localScale = Vector3.one * 0.75f;
+                GetComponent<SpriteRenderer>().color = Color.yellow;
+                col.enabled = true;
+                //SaveSystem.SaveGame();
+                return;
             }
             else
             {
-            Debug.Log("ruh roh");
-            return;
+                Debug.Log("ruh roh");
+                return;
             }
 
         }
